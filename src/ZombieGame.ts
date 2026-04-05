@@ -29,6 +29,7 @@ export class ZombieGame {
 
     this.camera.follow(
       this.players[0],
+      this.stage,
       this.context.canvas.width,
       this.context.canvas.height,
     );
