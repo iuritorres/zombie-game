@@ -1,5 +1,5 @@
-import { Camera } from "../engine/Camera";
-import { drawFrame } from "../utils/context";
+import { Camera } from "../../engine/Camera";
+import { drawFrame } from "../../utils/context";
 
 interface ConstructorParams {
   image: HTMLImageElement;

@@ -1,8 +1,8 @@
-import { Camera } from "../engine/Camera";
-import { controlHistory, InputHandler } from "../engine/InputHandler";
-import { Frame } from "../types/global";
-import { PlayerState } from "../types/player";
-import { drawFrame } from "../utils/context";
+import { Camera } from "../../engine/Camera";
+import { controlHistory, InputHandler } from "../../engine/InputHandler";
+import { Frame } from "../../types/global";
+import { PlayerState } from "../../types/player";
+import { drawFrame } from "../../utils/context";
 
 interface ConstructorParams {
   name: string;
@@ -189,15 +189,16 @@ export class Player {
     };
   }
 
+  update() {
+    this.states[this.currentState]?.update();
+    this.updatePosition();
+  }
+
   draw(
     context: CanvasRenderingContext2D,
     camera: Camera,
     frameTimeDelta: number,
   ) {
-    this.states[this.currentState]?.update();
-    this.updatePosition();
-
-    // REAL DRAW CODE
     const currentAnimationFrames = this.animations[this.currentState] ?? [];
     if (currentAnimationFrames.length === 0) return;
 
