@@ -1,22 +1,25 @@
+import { Camera } from "./engine/Camera";
 import { InputHandler } from "./engine/InputHandler";
 import { Player } from "./players/Player";
 import { Zeke } from "./players/Zeke";
 import { RescueTheNeighboursStage } from "./stages/Rescue The Neighbours/RescueTheNeighboursStage";
-import { Direction, drawFrame, getContext } from "./utils/context";
+import { drawFrame, getContext } from "./utils/context";
 
 export class ZombieGame {
   context: CanvasRenderingContext2D;
   stage: RescueTheNeighboursStage;
+  camera: Camera;
   players: Player[];
 
   frameTimestamp = {
     previous: 0,
-    current: 0,
   };
 
   constructor() {
     this.context = getContext();
     this.stage = new RescueTheNeighboursStage();
+    this.camera = new Camera();
+
     this.players = [new Zeke()];
   }
 
@@ -24,10 +27,16 @@ export class ZombieGame {
     const frameTimeDelta = timestamp - this.frameTimestamp.previous;
     this.frameTimestamp.previous = timestamp;
 
-    this.stage.draw(this.context);
+    this.camera.follow(
+      this.players[0],
+      this.context.canvas.width,
+      this.context.canvas.height,
+    );
+
+    this.stage.draw(this.context, this.camera);
 
     for (const player of this.players) {
-      player.draw(this.context, frameTimeDelta);
+      player.draw(this.context, this.camera, frameTimeDelta);
     }
 
     window.requestAnimationFrame(this.frame.bind(this));
@@ -63,17 +72,13 @@ export class ZombieGame {
       drawFrame({
         context: this.context,
         image: zombieImage,
+        position: { x: 10, y: 10 },
         dimensions: {
           sourceX: 67,
           sourceY: 10,
           sourceWidth: 368,
           sourceHeight: 478,
         },
-        position: {
-          x: 10,
-          y: 10,
-        },
-        direction: Direction.RIGHT,
         scale: 0.09,
       });
 

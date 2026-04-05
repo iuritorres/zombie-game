@@ -1,4 +1,5 @@
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../constants/game";
+import { Frame, Position } from "../types/global";
 
 export function getContext() {
   const canvas = document.querySelector("canvas");
@@ -16,31 +17,9 @@ export function getContext() {
   return context;
 }
 
-interface Dimensions {
-  sourceX: number;
-  sourceY: number;
-  sourceWidth: number;
-  sourceHeight: number;
-}
-
-interface Position {
-  x: number;
-  y: number;
-}
-
-export enum Direction {
-  RIGHT = 1,
-  LEFT = -1,
-}
-
-export interface Frame {
-  dimensions: Dimensions;
-}
-
 interface DrawFrameParams extends Frame {
   context: CanvasRenderingContext2D;
   image: HTMLImageElement;
-  direction?: Direction;
   scale?: number;
   position: Position;
 }
@@ -50,18 +29,15 @@ export function drawFrame({
   image,
   dimensions,
   position,
-  direction = Direction.RIGHT,
   scale = 1,
 }: DrawFrameParams) {
-  context.scale(direction, 1);
-
   context.drawImage(
     image,
     dimensions.sourceX,
     dimensions.sourceY,
     dimensions.sourceWidth,
     dimensions.sourceHeight,
-    position.x * direction,
+    position.x,
     position.y,
     dimensions.sourceWidth * scale,
     dimensions.sourceHeight * scale,

@@ -1,6 +1,8 @@
+import { Camera } from "../engine/Camera";
 import { controlHistory, InputHandler } from "../engine/InputHandler";
+import { Frame } from "../types/global";
 import { PlayerState } from "../types/player";
-import { drawFrame, Frame } from "../utils/context";
+import { drawFrame } from "../utils/context";
 
 interface ConstructorParams {
   name: string;
@@ -27,7 +29,7 @@ export class Player {
   > = {};
 
   attributes = {
-    movementSpeed: 0.7,
+    movementSpeed: 0.65,
   };
 
   position = {
@@ -187,7 +189,11 @@ export class Player {
     };
   }
 
-  draw(context: CanvasRenderingContext2D, frameTimeDelta: number) {
+  draw(
+    context: CanvasRenderingContext2D,
+    camera: Camera,
+    frameTimeDelta: number,
+  ) {
     this.states[this.currentState]?.update();
     this.updatePosition();
 
@@ -216,8 +222,11 @@ export class Player {
     drawFrame({
       context,
       image: this.image,
+      position: {
+        x: this.position.x - camera.position.x,
+        y: this.position.y - camera.position.y,
+      },
       dimensions: frame.dimensions,
-      position: this.position,
     });
   }
 }
