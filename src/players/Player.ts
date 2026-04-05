@@ -26,6 +26,10 @@ export class Player {
     >
   > = {};
 
+  attributes = {
+    movementSpeed: 0.7,
+  };
+
   position = {
     x: 210,
     y: 100,
@@ -136,16 +140,16 @@ export class Player {
   handleWalkState() {
     if (InputHandler.isUp()) {
       this.changeState(PlayerState.WALK_UP);
-      this.velocity.y = -2;
+      this.velocity.y = -this.attributes.movementSpeed;
     } else if (InputHandler.isDown()) {
       this.changeState(PlayerState.WALK_DOWN);
-      this.velocity.y = 2;
+      this.velocity.y = this.attributes.movementSpeed;
     } else if (InputHandler.isLeft()) {
       this.changeState(PlayerState.WALK_LEFT);
-      this.velocity.x = -2;
+      this.velocity.x = -this.attributes.movementSpeed;
     } else if (InputHandler.isRight()) {
       this.changeState(PlayerState.WALK_RIGHT);
-      this.velocity.x = 2;
+      this.velocity.x = this.attributes.movementSpeed;
     } else {
       const directionalKeys = [
         "ArrowUp",
