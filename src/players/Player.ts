@@ -26,6 +26,16 @@ export class Player {
     >
   > = {};
 
+  position = {
+    x: 210,
+    y: 100,
+  };
+
+  velocity = {
+    x: 0,
+    y: 0,
+  };
+
   states: Record<
     PlayerState,
     {
@@ -113,6 +123,7 @@ export class Player {
     this.currentState = newState;
     this.animationFrame = 0;
     this.animationTimer = 0;
+    this.velocity = { x: 0, y: 0 };
   }
 
   handleIdleState() {
@@ -123,12 +134,19 @@ export class Player {
   }
 
   handleWalkState() {
-    if (InputHandler.isUp()) this.changeState(PlayerState.WALK_UP);
-    else if (InputHandler.isDown()) this.changeState(PlayerState.WALK_DOWN);
-    else if (InputHandler.isLeft()) this.changeState(PlayerState.WALK_LEFT);
-    else if (InputHandler.isRight()) this.changeState(PlayerState.WALK_RIGHT);
-    else {
-      console.log("pressedKeys", controlHistory);
+    if (InputHandler.isUp()) {
+      this.changeState(PlayerState.WALK_UP);
+      this.velocity.y = -2;
+    } else if (InputHandler.isDown()) {
+      this.changeState(PlayerState.WALK_DOWN);
+      this.velocity.y = 2;
+    } else if (InputHandler.isLeft()) {
+      this.changeState(PlayerState.WALK_LEFT);
+      this.velocity.x = -2;
+    } else if (InputHandler.isRight()) {
+      this.changeState(PlayerState.WALK_RIGHT);
+      this.velocity.x = 2;
+    } else {
       const directionalKeys = [
         "ArrowUp",
         "ArrowDown",
@@ -158,8 +176,16 @@ export class Player {
     }
   }
 
-  async draw(context: CanvasRenderingContext2D, frameTimeDelta: number) {
+  updatePosition() {
+    this.position = {
+      x: (this.position.x += this.velocity.x),
+      y: (this.position.y += this.velocity.y),
+    };
+  }
+
+  draw(context: CanvasRenderingContext2D, frameTimeDelta: number) {
     this.states[this.currentState]?.update();
+    this.updatePosition();
 
     // REAL DRAW CODE
     const currentAnimationFrames = this.animations[this.currentState] ?? [];
@@ -187,7 +213,7 @@ export class Player {
       context,
       image: this.image,
       dimensions: frame.dimensions,
-      position: { x: 50, y: 50 },
+      position: this.position,
     });
   }
 }
