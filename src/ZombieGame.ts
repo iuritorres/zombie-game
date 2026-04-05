@@ -1,3 +1,4 @@
+import { InputHandler } from "./engine/InputHandler";
 import { Player } from "./players/Player";
 import { Zeke } from "./players/Zeke";
 import { RescueTheNeighboursStage } from "./stages/Rescue The Neighbours/RescueTheNeighboursStage";
@@ -17,12 +18,6 @@ export class ZombieGame {
     this.context = getContext();
     this.stage = new RescueTheNeighboursStage();
     this.players = [new Zeke()];
-
-    console.log("ZombieGame initialized");
-  }
-
-  start() {
-    window.requestAnimationFrame(this.frame.bind(this));
   }
 
   frame(timestamp: number) {
@@ -38,7 +33,11 @@ export class ZombieGame {
     window.requestAnimationFrame(this.frame.bind(this));
   }
 
-  draw() {}
+  start() {
+    InputHandler.registerKeyboardEvents();
+
+    window.requestAnimationFrame(this.frame.bind(this));
+  }
 
   startTitleAnimation() {
     const zombieImage = document.querySelector(
