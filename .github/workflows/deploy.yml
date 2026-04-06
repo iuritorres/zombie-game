@@ -35,7 +35,8 @@ jobs:
           cp src/index.html dist/
           cp src/global.css dist/
           cp -r src/static dist/
-          cp -r src/stages dist/
+          mkdir -p dist/entities
+          cp -r "src/entities/stages" dist/entities/
           sed -i 's|\.\./dist/main\.js|./main.js|g' dist/index.html
 
       - uses: actions/configure-pages@v5
