@@ -1,4 +1,4 @@
-import { Stage } from "../stages/Stage";
+import { Stage } from "../entities/stages/Stage";
 import { Position } from "../types/global";
 
 export class Camera {

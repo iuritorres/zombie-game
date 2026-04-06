@@ -1,4 +1,4 @@
-import { PlayerState } from "../types/player";
+import { PlayerState } from "../../types/player";
 import { Player } from "./Player";
 
 export class Zeke extends Player {
