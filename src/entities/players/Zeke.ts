@@ -7,45 +7,25 @@ export class Zeke extends Player {
     [
       `${PlayerState.IDLE_UP}-1`,
       {
-        dimensions: {
-          sourceX: 87,
-          sourceY: 86,
-          sourceWidth: 16,
-          sourceHeight: 35,
-        },
+        dimensions: { x: 87, y: 86, width: 16, height: 35 },
       },
     ],
     [
       `${PlayerState.IDLE_DOWN}-1`,
       {
-        dimensions: {
-          sourceX: 86,
-          sourceY: 5,
-          sourceWidth: 16,
-          sourceHeight: 36,
-        },
+        dimensions: { x: 86, y: 5, width: 16, height: 36 },
       },
     ],
     [
       `${PlayerState.IDLE_LEFT}-1`,
       {
-        dimensions: {
-          sourceX: 87,
-          sourceY: 124,
-          sourceWidth: 15,
-          sourceHeight: 37,
-        },
+        dimensions: { x: 87, y: 124, width: 15, height: 37 },
       },
     ],
     [
       `${PlayerState.IDLE_RIGHT}-1`,
       {
-        dimensions: {
-          sourceX: 87,
-          sourceY: 44,
-          sourceWidth: 15,
-          sourceHeight: 37,
-        },
+        dimensions: { x: 87, y: 44, width: 15, height: 37 },
       },
     ],
 
@@ -53,45 +33,25 @@ export class Zeke extends Player {
     [
       `${PlayerState.WALK_DOWN}-1`,
       {
-        dimensions: {
-          sourceX: 108,
-          sourceY: 4,
-          sourceWidth: 15,
-          sourceHeight: 37,
-        },
+        dimensions: { x: 108, y: 4, width: 15, height: 37 },
       },
     ],
     [
       `${PlayerState.WALK_DOWN}-2`,
       {
-        dimensions: {
-          sourceX: 128,
-          sourceY: 4,
-          sourceWidth: 16,
-          sourceHeight: 37,
-        },
+        dimensions: { x: 128, y: 4, width: 16, height: 37 },
       },
     ],
     [
       `${PlayerState.WALK_DOWN}-3`,
       {
-        dimensions: {
-          sourceX: 149,
-          sourceY: 4,
-          sourceWidth: 15,
-          sourceHeight: 37,
-        },
+        dimensions: { x: 149, y: 4, width: 15, height: 37 },
       },
     ],
     [
       `${PlayerState.WALK_DOWN}-4`,
       {
-        dimensions: {
-          sourceX: 170,
-          sourceY: 4,
-          sourceWidth: 15,
-          sourceHeight: 37,
-        },
+        dimensions: { x: 170, y: 4, width: 15, height: 37 },
       },
     ],
 
@@ -99,45 +59,25 @@ export class Zeke extends Player {
     [
       `${PlayerState.WALK_UP}-1`,
       {
-        dimensions: {
-          sourceX: 108,
-          sourceY: 85,
-          sourceWidth: 14,
-          sourceHeight: 36,
-        },
+        dimensions: { x: 108, y: 85, width: 14, height: 36 },
       },
     ],
     [
       `${PlayerState.WALK_UP}-2`,
       {
-        dimensions: {
-          sourceX: 129,
-          sourceY: 86,
-          sourceWidth: 16,
-          sourceHeight: 35,
-        },
+        dimensions: { x: 129, y: 86, width: 16, height: 35 },
       },
     ],
     [
       `${PlayerState.WALK_UP}-3`,
       {
-        dimensions: {
-          sourceX: 153,
-          sourceY: 85,
-          sourceWidth: 14,
-          sourceHeight: 36,
-        },
+        dimensions: { x: 153, y: 85, width: 14, height: 36 },
       },
     ],
     [
       `${PlayerState.WALK_UP}-4`,
       {
-        dimensions: {
-          sourceX: 174,
-          sourceY: 86,
-          sourceWidth: 16,
-          sourceHeight: 35,
-        },
+        dimensions: { x: 174, y: 86, width: 16, height: 35 },
       },
     ],
 
@@ -145,45 +85,25 @@ export class Zeke extends Player {
     [
       `${PlayerState.WALK_LEFT}-1`,
       {
-        dimensions: {
-          sourceX: 108,
-          sourceY: 124,
-          sourceWidth: 13,
-          sourceHeight: 37,
-        },
+        dimensions: { x: 108, y: 124, width: 13, height: 37 },
       },
     ],
     [
       `${PlayerState.WALK_LEFT}-2`,
       {
-        dimensions: {
-          sourceX: 129,
-          sourceY: 124,
-          sourceWidth: 21,
-          sourceHeight: 37,
-        },
+        dimensions: { x: 129, y: 124, width: 21, height: 37 },
       },
     ],
     [
       `${PlayerState.WALK_LEFT}-3`,
       {
-        dimensions: {
-          sourceX: 155,
-          sourceY: 124,
-          sourceWidth: 14,
-          sourceHeight: 37,
-        },
+        dimensions: { x: 155, y: 124, width: 14, height: 37 },
       },
     ],
     [
       `${PlayerState.WALK_LEFT}-4`,
       {
-        dimensions: {
-          sourceX: 174,
-          sourceY: 125,
-          sourceWidth: 21,
-          sourceHeight: 36,
-        },
+        dimensions: { x: 174, y: 125, width: 21, height: 36 },
       },
     ],
 
@@ -191,45 +111,25 @@ export class Zeke extends Player {
     [
       `${PlayerState.WALK_RIGHT}-1`,
       {
-        dimensions: {
-          sourceX: 108,
-          sourceY: 44,
-          sourceWidth: 13,
-          sourceHeight: 37,
-        },
+        dimensions: { x: 108, y: 44, width: 13, height: 37 },
       },
     ],
     [
       `${PlayerState.WALK_RIGHT}-2`,
       {
-        dimensions: {
-          sourceX: 126,
-          sourceY: 44,
-          sourceWidth: 21,
-          sourceHeight: 37,
-        },
+        dimensions: { x: 126, y: 44, width: 21, height: 37 },
       },
     ],
     [
       `${PlayerState.WALK_RIGHT}-3`,
       {
-        dimensions: {
-          sourceX: 152,
-          sourceY: 44,
-          sourceWidth: 14,
-          sourceHeight: 37,
-        },
+        dimensions: { x: 152, y: 44, width: 14, height: 37 },
       },
     ],
     [
       `${PlayerState.WALK_RIGHT}-4`,
       {
-        dimensions: {
-          sourceX: 170,
-          sourceY: 45,
-          sourceWidth: 21,
-          sourceHeight: 36,
-        },
+        dimensions: { x: 170, y: 45, width: 21, height: 36 },
       },
     ],
   ]);

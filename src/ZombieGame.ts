@@ -100,10 +100,10 @@ export class ZombieGame {
   //       image: zombieImage,
   //       position: { x: 10, y: 10 },
   //       dimensions: {
-  //         sourceX: 67,
-  //         sourceY: 10,
-  //         sourceWidth: 368,
-  //         sourceHeight: 478,
+  //         x: 67,
+  //         y: 10,
+  //         width: 368,
+  //         height: 478,
   //       },
   //       scale: 0.09,
   //     });

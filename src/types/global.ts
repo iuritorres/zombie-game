@@ -4,10 +4,10 @@ export interface Position {
 }
 
 export interface Dimensions {
-  sourceX: number;
-  sourceY: number;
-  sourceWidth: number;
-  sourceHeight: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 }
 
 export interface Frame {

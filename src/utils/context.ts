@@ -33,14 +33,14 @@ export function drawFrame({
 }: DrawFrameParams) {
   context.drawImage(
     image,
-    dimensions.sourceX,
-    dimensions.sourceY,
-    dimensions.sourceWidth,
-    dimensions.sourceHeight,
+    dimensions.x,
+    dimensions.y,
+    dimensions.width,
+    dimensions.height,
     position.x,
     position.y,
-    dimensions.sourceWidth * scale,
-    dimensions.sourceHeight * scale,
+    dimensions.width * scale,
+    dimensions.height * scale,
   );
 
   context.setTransform(1, 0, 0, 1, 0, 0);
