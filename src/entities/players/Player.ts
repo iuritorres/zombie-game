@@ -189,16 +189,7 @@ export class Player {
     };
   }
 
-  update(frameTimeDelta: number) {
-    this.states[this.currentState]?.update();
-    this.updatePosition(frameTimeDelta);
-  }
-
-  draw(
-    context: CanvasRenderingContext2D,
-    camera: Camera,
-    frameTimeDelta: number,
-  ) {
+  updateAnimation(frameTimeDelta: number) {
     const currentAnimationFrames = this.animations[this.currentState] ?? [];
     if (currentAnimationFrames.length === 0) return;
 
@@ -210,6 +201,16 @@ export class Player {
       this.animationFrame =
         (this.animationFrame + 1) % currentAnimationFrames.length;
     }
+  }
+
+  update(frameTimeDelta: number) {
+    this.states[this.currentState]?.update();
+    this.updatePosition(frameTimeDelta);
+    this.updateAnimation(frameTimeDelta);
+  }
+
+  draw(context: CanvasRenderingContext2D, camera: Camera) {
+    const currentAnimationFrames = this.animations[this.currentState] ?? [];
 
     const frame = this.frames.get(
       currentAnimationFrames[this.animationFrame].frameKey,

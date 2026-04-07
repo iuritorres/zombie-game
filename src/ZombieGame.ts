@@ -41,7 +41,7 @@ export class ZombieGame {
       this.context.canvas.height,
     );
 
-    this.draw(this.context, frameTimeDelta);
+    this.draw(this.context);
 
     window.requestAnimationFrame(this.frame.bind(this));
   }
@@ -56,11 +56,11 @@ export class ZombieGame {
     }
   }
 
-  draw(context: CanvasRenderingContext2D, frameTimeDelta: number) {
+  draw(context: CanvasRenderingContext2D) {
     this.stage.draw(context, this.camera);
 
     for (const player of this.players) {
-      player.draw(context, this.camera, frameTimeDelta);
+      player.draw(context, this.camera);
     }
 
     for (const overlay of this.overlays) {
