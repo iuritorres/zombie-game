@@ -48,7 +48,7 @@ export class ZombieGame {
 
   update(frameTimeDelta: number) {
     for (const player of this.players) {
-      player.update();
+      player.update(frameTimeDelta);
     }
 
     for (const overlay of this.overlays) {

@@ -29,7 +29,7 @@ export class Player {
   > = {};
 
   attributes = {
-    movementSpeed: 0.65,
+    movementSpeed: 0.15,
   };
 
   position = {
@@ -182,16 +182,16 @@ export class Player {
     }
   }
 
-  updatePosition() {
+  updatePosition(frameTimeDelta: number) {
     this.position = {
-      x: (this.position.x += this.velocity.x),
-      y: (this.position.y += this.velocity.y),
+      x: (this.position.x += this.velocity.x * frameTimeDelta),
+      y: (this.position.y += this.velocity.y * frameTimeDelta),
     };
   }
 
-  update() {
+  update(frameTimeDelta: number) {
     this.states[this.currentState]?.update();
-    this.updatePosition();
+    this.updatePosition(frameTimeDelta);
   }
 
   draw(
