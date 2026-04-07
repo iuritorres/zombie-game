@@ -19,10 +19,10 @@ export class Stage {
     this.image = image;
 
     const stageBoundaries: Dimensions[] = [
-      { x: 1, y: 1, width: this.image.width, height: -1 },
-      { x: 1, y: 1, width: -1, height: this.image.height },
-      { x: 1, y: this.image.height - 2, width: this.image.width, height: 1 },
-      { x: this.image.width - 3, y: 1, width: 1, height: this.image.height },
+      { x: 0, y: 0, width: this.image.width, height: 4 },
+      { x: 0, y: 0, width: 4, height: this.image.height },
+      { x: 0, y: this.image.height - 4, width: this.image.width, height: 4 },
+      { x: this.image.width - 4, y: 0, width: 4, height: this.image.height },
     ];
 
     this.collisionMap.push(...stageBoundaries);
@@ -46,5 +46,7 @@ export class Stage {
     for (const collisionBox of this.collisionMap) {
       Debug.drawBox(context, camera, { x: 0, y: 0 }, collisionBox, "#7777FF");
     }
+
+
   }
 }

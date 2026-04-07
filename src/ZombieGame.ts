@@ -4,6 +4,7 @@ import { FPSCounter } from "./entities/overlays/FPSCounter";
 import { Overlay } from "./entities/overlays/Overlay";
 import { Player } from "./entities/players/Player";
 import { Zeke } from "./entities/players/Zeke";
+import { EveningOfTheUndeadStage } from "./entities/stages/Evening of the Undead/EveningOfTheUndeadStage";
 import { RescueTheNeighboursStage } from "./entities/stages/Rescue The Neighbours/RescueTheNeighboursStage";
 import { getContext } from "./utils/context";
 
@@ -21,7 +22,7 @@ export class ZombieGame {
   constructor() {
     this.context = getContext();
 
-    this.stage = new RescueTheNeighboursStage();
+    this.stage = new EveningOfTheUndeadStage();
     this.camera = new Camera();
     this.overlays = [new FPSCounter()];
 

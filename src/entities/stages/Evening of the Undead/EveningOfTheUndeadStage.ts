@@ -7,5 +7,9 @@ export class EveningOfTheUndeadStage extends Stage {
         "img[alt='stage-evening-of-the-undead']",
       ) as HTMLImageElement,
     });
+
+    this.loadCollisionMap();
   }
+
+  loadCollisionMap() {}
 }
