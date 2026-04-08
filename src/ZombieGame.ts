@@ -128,7 +128,6 @@ export class ZombieGame {
           y: offsetY + player.position.y * scale,
         },
         dimensions: playerFaceFrame.dimensions,
-        // scale,
       });
     }
 

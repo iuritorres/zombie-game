@@ -1,7 +1,7 @@
 import { ENABLE_DEBUG } from "../../constants/game";
 import { Camera } from "../../engine/Camera";
 import { controlHistory, InputHandler } from "../../engine/InputHandler";
-import { Dimensions, Frame, Position } from "../../types/global";
+import { Attributes, Dimensions, Frame, Position } from "../../types/global";
 import { PlayerState } from "../../types/player";
 import { drawFrame } from "../../utils/context";
 import { Debug } from "../../utils/debug";
@@ -9,6 +9,7 @@ import { Debug } from "../../utils/debug";
 interface ConstructorParams {
   name: string;
   image: HTMLImageElement;
+  attributes: Attributes;
 }
 
 export class Player {
@@ -30,9 +31,7 @@ export class Player {
     >
   > = {};
 
-  attributes = {
-    movementSpeed: 0.15,
-  };
+  attributes: Attributes;
 
   collisionBox: Dimensions = {
     x: 2,
@@ -120,9 +119,10 @@ export class Player {
     },
   };
 
-  constructor({ name, image }: ConstructorParams) {
+  constructor({ name, image, attributes }: ConstructorParams) {
     this.name = name;
     this.image = image;
+    this.attributes = attributes;
   }
 
   getCollisionBox(): Dimensions {

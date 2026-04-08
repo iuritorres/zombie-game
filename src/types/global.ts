@@ -13,3 +13,7 @@ export interface Dimensions {
 export interface Frame {
   dimensions: Dimensions;
 }
+
+export interface Attributes {
+  movementSpeed: number;
+}

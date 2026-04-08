@@ -1,3 +1,4 @@
+import { Attributes } from "../../types/global";
 import { PlayerState } from "../../types/player";
 import { Player } from "./Player";
 
@@ -242,11 +243,16 @@ export class Zeke extends Player {
   };
 
   constructor() {
+    const baseAttributes: Attributes = {
+      movementSpeed: 0.12,
+    };
+
     super({
       name: "Zeke",
       image: document.querySelector(
         "img[alt='player-zeke']",
       ) as HTMLImageElement,
+      attributes: baseAttributes,
     });
   }
 }
