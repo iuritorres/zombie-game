@@ -15,7 +15,7 @@ export class RescueTheNeighboursStage extends Stage {
   loadCollisionMap() {
     const walls: Dimensions[] = [
       { x: 50, y: 50, width: 100, height: 20 },
-      { x: 200, y: 100, width: 20, height: 100 },
+      { x: 250, y: 100, width: 20, height: 100 },
     ];
 
     this.collisionMap.push(...walls);

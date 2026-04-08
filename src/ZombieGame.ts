@@ -4,8 +4,8 @@ import { FPSCounter } from "./entities/overlays/FPSCounter";
 import { Overlay } from "./entities/overlays/Overlay";
 import { Player } from "./entities/players/Player";
 import { Zeke } from "./entities/players/Zeke";
-import { EveningOfTheUndeadStage } from "./entities/stages/Evening of the Undead/EveningOfTheUndeadStage";
 import { RescueTheNeighboursStage } from "./entities/stages/Rescue The Neighbours/RescueTheNeighboursStage";
+import { boxOverlap } from "./utils/collisions";
 import { getContext } from "./utils/context";
 
 export class ZombieGame {
@@ -22,11 +22,25 @@ export class ZombieGame {
   constructor() {
     this.context = getContext();
 
-    this.stage = new EveningOfTheUndeadStage();
+    this.stage = new RescueTheNeighboursStage();
     this.camera = new Camera();
     this.overlays = [new FPSCounter()];
 
     this.players = [new Zeke()];
+  }
+
+  resolveCollisions(
+    player: Player,
+    previousPosition: { x: number; y: number },
+  ) {
+    for (const box of this.stage.collisionMap) {
+      const playerBox = player.getCollisionBox();
+
+      if (boxOverlap(playerBox, box)) {
+        player.position = previousPosition;
+        break;
+      }
+    }
   }
 
   frame(timestamp: number) {
@@ -49,7 +63,10 @@ export class ZombieGame {
 
   update(frameTimeDelta: number) {
     for (const player of this.players) {
+      const previousPosition = { ...player.position };
       player.update(frameTimeDelta);
+
+      this.resolveCollisions(player, previousPosition);
     }
 
     for (const overlay of this.overlays) {

@@ -1,8 +1,10 @@
+import { ENABLE_DEBUG } from "../../constants/game";
 import { Camera } from "../../engine/Camera";
 import { controlHistory, InputHandler } from "../../engine/InputHandler";
-import { Frame } from "../../types/global";
+import { Dimensions, Frame, Position } from "../../types/global";
 import { PlayerState } from "../../types/player";
 import { drawFrame } from "../../utils/context";
+import { Debug } from "../../utils/debug";
 
 interface ConstructorParams {
   name: string;
@@ -32,7 +34,14 @@ export class Player {
     movementSpeed: 0.15,
   };
 
-  position = {
+  collisionBox: Dimensions = {
+    x: 2,
+    y: 28,
+    width: 12,
+    height: 8,
+  };
+
+  position: Position = {
     x: 210,
     y: 100,
   };
@@ -114,6 +123,15 @@ export class Player {
   constructor({ name, image }: ConstructorParams) {
     this.name = name;
     this.image = image;
+  }
+
+  getCollisionBox(): Dimensions {
+    return {
+      x: this.position.x + this.collisionBox.x,
+      y: this.position.y + this.collisionBox.y,
+      width: this.collisionBox.width,
+      height: this.collisionBox.height,
+    };
   }
 
   changeState(newState: PlayerState) {
@@ -230,5 +248,15 @@ export class Player {
       },
       dimensions: frame.dimensions,
     });
+
+    if (!ENABLE_DEBUG) return;
+
+    Debug.drawBox(
+      context,
+      camera,
+      { x: 0, y: 0 },
+      this.getCollisionBox(),
+      "#55FF55",
+    );
   }
 }
