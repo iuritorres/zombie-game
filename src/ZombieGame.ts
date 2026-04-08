@@ -6,8 +6,10 @@ import { Overlay } from "./entities/overlays/Overlay";
 import { Player } from "./entities/players/Player";
 import { Zeke } from "./entities/players/Zeke";
 import { RescueTheNeighboursStage } from "./entities/stages/Rescue The Neighbours/RescueTheNeighboursStage";
+import { PlayerState } from "./types/player";
 import { boxOverlap } from "./utils/collisions";
-import { getContext } from "./utils/context";
+import { drawFrame, getContext } from "./utils/context";
+import { Debug } from "./utils/debug";
 
 export class ZombieGame {
   context: CanvasRenderingContext2D;
@@ -103,32 +105,49 @@ export class ZombieGame {
     context.clearRect(0, 0, canvasWidth, canvasHeight);
     context.drawImage(
       this.stage.image,
-      0, 0, mapWidth, mapHeight,
-      offsetX, offsetY, mapWidth * scale, mapHeight * scale,
+      0,
+      0,
+      mapWidth,
+      mapHeight,
+      offsetX,
+      offsetY,
+      mapWidth * scale,
+      mapHeight * scale,
     );
+
+    for (const player of this.players) {
+      const playerFaceFrame = player.frames.get(
+        `${PlayerState.IDLE_DOWN}-FACE`,
+      )!;
+
+      drawFrame({
+        context,
+        image: player.image,
+        position: {
+          x: offsetX + player.position.x * scale,
+          y: offsetY + player.position.y * scale,
+        },
+        dimensions: playerFaceFrame.dimensions,
+        // scale,
+      });
+    }
 
     if (!ENABLE_DEBUG) return;
 
-    const drawScaledBox = (x: number, y: number, w: number, h: number, color: string) => {
-      const sx = offsetX + x * scale + 0.5;
-      const sy = offsetY + y * scale + 0.5;
-      const sw = w * scale;
-      const sh = h * scale;
-      context.beginPath();
-      context.fillStyle = color + "44";
-      context.strokeStyle = color + "AA";
-      context.fillRect(sx, sy, sw, sh);
-      context.rect(sx, sy, sw, sh);
-      context.stroke();
-    };
-
     for (const box of this.stage.collisionMap) {
-      drawScaledBox(box.x, box.y, box.width, box.height, "#7777FF");
-    }
-
-    for (const player of this.players) {
-      const box = player.getCollisionBox();
-      drawScaledBox(box.x, box.y, box.width, box.height, "#55FF55");
+      Debug.drawScaledBox(
+        {
+          x: box.x,
+          y: box.y,
+          width: box.width,
+          height: box.height,
+        },
+        offsetX,
+        offsetY,
+        scale,
+        "#7777FF",
+        this.context,
+      );
     }
   }
 

@@ -30,4 +30,25 @@ export class Debug {
 
     context.stroke();
   }
+
+  static drawScaledBox(
+    dimensions: Dimensions,
+    offsetX: number,
+    offsetY: number,
+    scale: number,
+    color: string,
+    context: CanvasRenderingContext2D,
+  ) {
+    const scaledX = offsetX + dimensions.x * scale + 0.5;
+    const scaledY = offsetY + dimensions.y * scale + 0.5;
+    const scaledWidth = dimensions.width * scale;
+    const scaledHeight = dimensions.height * scale;
+
+    context.beginPath();
+    context.fillStyle = color + "44";
+    context.strokeStyle = color + "AA";
+    context.fillRect(scaledX, scaledY, scaledWidth, scaledHeight);
+    context.rect(scaledX, scaledY, scaledWidth, scaledHeight);
+    context.stroke();
+  }
 }

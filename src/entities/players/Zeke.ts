@@ -3,6 +3,14 @@ import { Player } from "./Player";
 
 export class Zeke extends Player {
   frames = new Map([
+    // Face
+    [
+      `${PlayerState.IDLE_DOWN}-FACE`,
+      {
+        dimensions: { x: 218, y: 4, width: 9, height: 15 },
+      },
+    ],
+
     // Idle Stance
     [
       `${PlayerState.IDLE_UP}-1`,
