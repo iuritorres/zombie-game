@@ -70,6 +70,10 @@ export class InputHandler {
     return this.isKeyDown(controls.keyboard[Control.RIGHT]);
   }
 
+  static isMap() {
+    return this.isKeyDown(controls.keyboard[Control.MAP]);
+  }
+
   static registerKeyboardEvents() {
     window.addEventListener("keydown", this.handleKeyDown);
     window.addEventListener("keyup", this.handleKeyUp);

@@ -1,3 +1,4 @@
+import { ENABLE_DEBUG } from "./constants/game";
 import { Camera } from "./engine/Camera";
 import { InputHandler } from "./engine/InputHandler";
 import { FPSCounter } from "./entities/overlays/FPSCounter";
@@ -75,6 +76,11 @@ export class ZombieGame {
   }
 
   draw(context: CanvasRenderingContext2D) {
+    if (InputHandler.isMap()) {
+      this.drawFullMap(context);
+      return;
+    }
+
     this.stage.draw(context, this.camera);
 
     for (const player of this.players) {
@@ -83,6 +89,46 @@ export class ZombieGame {
 
     for (const overlay of this.overlays) {
       overlay.draw(context);
+    }
+  }
+
+  drawFullMap(context: CanvasRenderingContext2D) {
+    const { width: canvasWidth, height: canvasHeight } = context.canvas;
+    const { width: mapWidth, height: mapHeight } = this.stage.image;
+
+    const scale = Math.min(canvasWidth / mapWidth, canvasHeight / mapHeight);
+    const offsetX = (canvasWidth - mapWidth * scale) / 2;
+    const offsetY = (canvasHeight - mapHeight * scale) / 2;
+
+    context.clearRect(0, 0, canvasWidth, canvasHeight);
+    context.drawImage(
+      this.stage.image,
+      0, 0, mapWidth, mapHeight,
+      offsetX, offsetY, mapWidth * scale, mapHeight * scale,
+    );
+
+    if (!ENABLE_DEBUG) return;
+
+    const drawScaledBox = (x: number, y: number, w: number, h: number, color: string) => {
+      const sx = offsetX + x * scale + 0.5;
+      const sy = offsetY + y * scale + 0.5;
+      const sw = w * scale;
+      const sh = h * scale;
+      context.beginPath();
+      context.fillStyle = color + "44";
+      context.strokeStyle = color + "AA";
+      context.fillRect(sx, sy, sw, sh);
+      context.rect(sx, sy, sw, sh);
+      context.stroke();
+    };
+
+    for (const box of this.stage.collisionMap) {
+      drawScaledBox(box.x, box.y, box.width, box.height, "#7777FF");
+    }
+
+    for (const player of this.players) {
+      const box = player.getCollisionBox();
+      drawScaledBox(box.x, box.y, box.width, box.height, "#55FF55");
     }
   }
 

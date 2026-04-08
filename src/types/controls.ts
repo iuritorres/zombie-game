@@ -4,4 +4,7 @@ export enum Control {
   RIGHT = "RIGHT",
   UP = "UP",
   DOWN = "DOWN",
+
+  // UI
+  MAP = "MAP",
 }

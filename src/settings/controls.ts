@@ -6,5 +6,6 @@ export const controls = {
     [Control.DOWN]: "ArrowDown",
     [Control.LEFT]: "ArrowLeft",
     [Control.RIGHT]: "ArrowRight",
+    [Control.MAP]: "m",
   },
 };
