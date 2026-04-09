@@ -236,7 +236,13 @@ export class Player {
       if (distance < 5) {
         InputHandler.clickTarget = null;
         this.velocity = { x: 0, y: 0 };
-        this.changeState(PlayerState.IDLE_DOWN);
+        const idleStateMap: Partial<Record<PlayerState, PlayerState>> = {
+          [PlayerState.WALK_UP]: PlayerState.IDLE_UP,
+          [PlayerState.WALK_DOWN]: PlayerState.IDLE_DOWN,
+          [PlayerState.WALK_LEFT]: PlayerState.IDLE_LEFT,
+          [PlayerState.WALK_RIGHT]: PlayerState.IDLE_RIGHT,
+        };
+        this.changeState(idleStateMap[this.currentState] ?? PlayerState.IDLE_DOWN);
         return;
       }
 
