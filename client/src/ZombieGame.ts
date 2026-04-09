@@ -48,12 +48,14 @@ export class ZombieGame {
         player.position = previousPosition;
         player.velocity = { x: 0, y: 0 };
         InputHandler.clickTarget = null;
+
         const idleStateMap: Partial<Record<PlayerState, PlayerState>> = {
           [PlayerState.WALK_UP]: PlayerState.IDLE_UP,
           [PlayerState.WALK_DOWN]: PlayerState.IDLE_DOWN,
           [PlayerState.WALK_LEFT]: PlayerState.IDLE_LEFT,
           [PlayerState.WALK_RIGHT]: PlayerState.IDLE_RIGHT,
         };
+
         const idleState = idleStateMap[player.currentState];
         if (idleState) player.changeState(idleState);
         break;
