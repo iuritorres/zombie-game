@@ -26,24 +26,24 @@ jobs:
         with:
           node-version: "20"
 
-      - run: npm install
+      - run: npm install --workspace=client
 
-      - run: npm run build
+      - run: npm run client:build --workspace=client
 
       - name: Copy static assets to dist
         run: |
-          cp src/index.html dist/
-          cp src/global.css dist/
-          cp -r src/static dist/
-          mkdir -p dist/entities
-          cp -r "src/entities/stages" dist/entities/
-          sed -i 's|\.\./dist/main\.js|./main.js|g' dist/index.html
+          cp client/src/index.html client/dist/
+          cp client/src/global.css client/dist/
+          cp -r client/src/static client/dist/
+          mkdir -p client/dist/entities
+          cp -r "client/src/entities/stages" client/dist/entities/
+          sed -i 's|\.\./dist/main\.js|./main.js|g' client/dist/index.html
 
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/
+          path: client/dist/
 
       - uses: actions/deploy-pages@v4
         id: deployment

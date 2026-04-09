@@ -1,0 +1,17 @@
+{
+  "name": "rpg-game-server",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/ws": "^8.5.0",
+    "ts-node": "^10.9.2"
+  }
+}

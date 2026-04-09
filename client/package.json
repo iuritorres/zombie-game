@@ -1,0 +1,16 @@
+{
+  "name": "rpg-game",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "esbuild src/main.ts --bundle --outfile=dist/main.js --platform=browser --target=es2020",
+    "dev": "esbuild src/main.ts --bundle --outfile=dist/main.js --platform=browser --target=es2020 --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "typescript": "^6.0.2"
+  }
+}

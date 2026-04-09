@@ -1,16 +1,16 @@
 {
   "name": "rpg-game",
   "version": "1.0.0",
-  "description": "",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
-    "build": "esbuild src/main.ts --bundle --outfile=dist/main.js --platform=browser --target=es2020",
-    "dev": "esbuild src/main.ts --bundle --outfile=dist/main.js --platform=browser --target=es2020 --watch"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "esbuild": "^0.25.0",
-    "typescript": "^6.0.2"
+    "client:build": "npm run build --workspace=client",
+    "client:dev": "npm run dev --workspace=client",
+    "server:dev": "npm run dev --workspace=server",
+    "server:build": "npm run build --workspace=server",
+    "server:start": "npm run start --workspace=server"
   }
 }
