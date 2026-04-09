@@ -28,7 +28,7 @@ jobs:
 
       - run: npm install --workspace=client
 
-      - run: npm run client:build --workspace=client
+      - run: npm run build --workspace=client
 
       - name: Copy static assets to dist
         run: |
