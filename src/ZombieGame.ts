@@ -1,12 +1,15 @@
-import { ENABLE_DEBUG } from "./constants/game";
+import { CONTROL_TYPE, ENABLE_DEBUG } from "./constants/game";
 import { Camera } from "./engine/Camera";
 import { InputHandler } from "./engine/InputHandler";
+import { ClickIndicator } from "./entities/effects/ClickIndicator";
 import { FPSCounter } from "./entities/overlays/FPSCounter";
 import { Overlay } from "./entities/overlays/Overlay";
 import { Player } from "./entities/players/Player";
 import { Zeke } from "./entities/players/Zeke";
 import { RescueTheNeighboursStage } from "./entities/stages/Rescue The Neighbours/RescueTheNeighboursStage";
+import { ControlType } from "./types/controls";
 import { PlayerState } from "./types/player";
+import { Position } from "./types/global";
 import { boxOverlap } from "./utils/collisions";
 import { drawFrame, getContext } from "./utils/context";
 import { Debug } from "./utils/debug";
@@ -17,6 +20,8 @@ export class ZombieGame {
   camera: Camera;
   overlays: Overlay[];
   players: Player[];
+  clickIndicator = new ClickIndicator();
+  previousClickTarget: Position | null = null;
 
   frameTimestamp = {
     previous: 0,
@@ -60,14 +65,28 @@ export class ZombieGame {
     );
 
     this.draw(this.context);
+    InputHandler.updateCursor();
 
     window.requestAnimationFrame(this.frame.bind(this));
   }
 
   update(frameTimeDelta: number) {
+    if (InputHandler.clickTarget !== this.previousClickTarget) {
+      this.previousClickTarget = InputHandler.clickTarget;
+
+      if (InputHandler.clickTarget) {
+        this.clickIndicator.trigger(
+          InputHandler.clickTarget.x,
+          InputHandler.clickTarget.y,
+        );
+      }
+    }
+
+    this.clickIndicator.update(frameTimeDelta);
+
     for (const player of this.players) {
       const previousPosition = { ...player.position };
-      player.update(frameTimeDelta);
+      player.update(frameTimeDelta, this.camera);
 
       this.resolveCollisions(player, previousPosition);
     }
@@ -88,6 +107,8 @@ export class ZombieGame {
     for (const player of this.players) {
       player.draw(context, this.camera);
     }
+
+    this.clickIndicator.draw(context, this.camera);
 
     for (const overlay of this.overlays) {
       overlay.draw(context);
@@ -151,7 +172,11 @@ export class ZombieGame {
   }
 
   start() {
-    InputHandler.registerKeyboardEvents();
+    InputHandler.registerCursorEvents();
+
+    CONTROL_TYPE === ControlType.KEYBOARD
+      ? InputHandler.registerKeyboardEvents()
+      : InputHandler.registerMouseEvents(this.camera);
 
     window.requestAnimationFrame(this.frame.bind(this));
   }

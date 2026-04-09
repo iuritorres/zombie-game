@@ -1,6 +1,7 @@
-import { ENABLE_DEBUG } from "../../constants/game";
+import { CONTROL_TYPE, ENABLE_DEBUG } from "../../constants/game";
 import { Camera } from "../../engine/Camera";
 import { controlHistory, InputHandler } from "../../engine/InputHandler";
+import { ControlType } from "../../types/controls";
 import { Attributes, Dimensions, Frame, Position } from "../../types/global";
 import { PlayerState } from "../../types/player";
 import { drawFrame } from "../../utils/context";
@@ -53,7 +54,7 @@ export class Player {
   states: Record<
     PlayerState,
     {
-      update: () => void;
+      update: (camera?: Camera) => void;
       validFrom?: PlayerState[];
     }
   > = {
@@ -151,52 +152,106 @@ export class Player {
   }
 
   handleIdleState() {
-    if (InputHandler.isUp()) this.changeState(PlayerState.WALK_UP);
-    else if (InputHandler.isDown()) this.changeState(PlayerState.WALK_DOWN);
-    else if (InputHandler.isLeft()) this.changeState(PlayerState.WALK_LEFT);
-    else if (InputHandler.isRight()) this.changeState(PlayerState.WALK_RIGHT);
+    if (CONTROL_TYPE === ControlType.KEYBOARD) {
+      if (InputHandler.isUp()) this.changeState(PlayerState.WALK_UP);
+      else if (InputHandler.isDown()) this.changeState(PlayerState.WALK_DOWN);
+      else if (InputHandler.isLeft()) this.changeState(PlayerState.WALK_LEFT);
+      else if (InputHandler.isRight()) this.changeState(PlayerState.WALK_RIGHT);
+    } else if (CONTROL_TYPE === ControlType.MOUSE) {
+      if (!InputHandler.clickTarget) return;
+      const { x: targetX, y: targetY } = InputHandler.clickTarget;
+      const feetX =
+        this.position.x + this.collisionBox.x + this.collisionBox.width / 2;
+      const feetY =
+        this.position.y + this.collisionBox.y + this.collisionBox.height / 2;
+
+      const distanceX = targetX - feetX;
+      const distanceY = targetY - feetY;
+
+      if (Math.abs(distanceX) > Math.abs(distanceY)) {
+        this.changeState(
+          distanceX > 0 ? PlayerState.WALK_RIGHT : PlayerState.WALK_LEFT,
+        );
+      } else {
+        this.changeState(
+          distanceY > 0 ? PlayerState.WALK_DOWN : PlayerState.WALK_UP,
+        );
+      }
+    }
   }
 
-  handleWalkState() {
-    if (InputHandler.isUp()) {
-      this.changeState(PlayerState.WALK_UP);
-      this.velocity.y = -this.attributes.movementSpeed;
-    } else if (InputHandler.isDown()) {
-      this.changeState(PlayerState.WALK_DOWN);
-      this.velocity.y = this.attributes.movementSpeed;
-    } else if (InputHandler.isLeft()) {
-      this.changeState(PlayerState.WALK_LEFT);
-      this.velocity.x = -this.attributes.movementSpeed;
-    } else if (InputHandler.isRight()) {
-      this.changeState(PlayerState.WALK_RIGHT);
-      this.velocity.x = this.attributes.movementSpeed;
-    } else {
-      const directionalKeys = [
-        "ArrowUp",
-        "ArrowDown",
-        "ArrowLeft",
-        "ArrowRight",
-      ];
+  handleWalkState(camera?: Camera) {
+    if (CONTROL_TYPE === ControlType.KEYBOARD) {
+      if (InputHandler.isUp()) {
+        this.changeState(PlayerState.WALK_UP);
+        this.velocity.y = -this.attributes.movementSpeed;
+      } else if (InputHandler.isDown()) {
+        this.changeState(PlayerState.WALK_DOWN);
+        this.velocity.y = this.attributes.movementSpeed;
+      } else if (InputHandler.isLeft()) {
+        this.changeState(PlayerState.WALK_LEFT);
+        this.velocity.x = -this.attributes.movementSpeed;
+      } else if (InputHandler.isRight()) {
+        this.changeState(PlayerState.WALK_RIGHT);
+        this.velocity.x = this.attributes.movementSpeed;
+      } else {
+        const directionalKeys = [
+          "ArrowUp",
+          "ArrowDown",
+          "ArrowLeft",
+          "ArrowRight",
+        ];
 
-      const lastDirectionKey = controlHistory
-        .slice()
-        .reverse()
-        .find((key) => directionalKeys.includes(key));
+        const lastDirectionKey = controlHistory
+          .slice()
+          .reverse()
+          .find((key) => directionalKeys.includes(key));
 
-      switch (lastDirectionKey) {
-        case "ArrowUp":
-          this.changeState(PlayerState.IDLE_UP);
-          break;
-        case "ArrowLeft":
-          this.changeState(PlayerState.IDLE_LEFT);
-          break;
-        case "ArrowRight":
-          this.changeState(PlayerState.IDLE_RIGHT);
-          break;
-        default:
-          this.changeState(PlayerState.IDLE_DOWN);
-          this.changeState(PlayerState.IDLE_DOWN);
+        switch (lastDirectionKey) {
+          case "ArrowUp":
+            this.changeState(PlayerState.IDLE_UP);
+            break;
+          case "ArrowLeft":
+            this.changeState(PlayerState.IDLE_LEFT);
+            break;
+          case "ArrowRight":
+            this.changeState(PlayerState.IDLE_RIGHT);
+            break;
+          default:
+            this.changeState(PlayerState.IDLE_DOWN);
+            this.changeState(PlayerState.IDLE_DOWN);
+        }
       }
+    } else if (CONTROL_TYPE === ControlType.MOUSE) {
+      if (!InputHandler.clickTarget) return;
+      const { x: targetX, y: targetY } = InputHandler.clickTarget;
+      const feetX =
+        this.position.x + this.collisionBox.x + this.collisionBox.width / 2;
+      const feetY =
+        this.position.y + this.collisionBox.y + this.collisionBox.height / 2;
+      const distanceX = targetX - feetX;
+      const distanceY = targetY - feetY;
+      const distance = Math.hypot(distanceX, distanceY);
+
+      if (distance < 5) {
+        InputHandler.clickTarget = null;
+        this.velocity = { x: 0, y: 0 };
+        this.changeState(PlayerState.IDLE_DOWN);
+        return;
+      }
+
+      if (Math.abs(distanceX) > Math.abs(distanceY)) {
+        this.changeState(
+          distanceX > 0 ? PlayerState.WALK_RIGHT : PlayerState.WALK_LEFT,
+        );
+      } else {
+        this.changeState(
+          distanceY > 0 ? PlayerState.WALK_DOWN : PlayerState.WALK_UP,
+        );
+      }
+
+      this.velocity.x = (distanceX / distance) * this.attributes.movementSpeed;
+      this.velocity.y = (distanceY / distance) * this.attributes.movementSpeed;
     }
   }
 
@@ -221,8 +276,8 @@ export class Player {
     }
   }
 
-  update(frameTimeDelta: number) {
-    this.states[this.currentState]?.update();
+  update(frameTimeDelta: number, camera: Camera) {
+    this.states[this.currentState]?.update(camera);
     this.updatePosition(frameTimeDelta);
     this.updateAnimation(frameTimeDelta);
   }

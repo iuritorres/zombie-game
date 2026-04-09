@@ -1,3 +1,8 @@
+export enum ControlType {
+  KEYBOARD = "KEYBOARD",
+  MOUSE = "MOUSE",
+}
+
 export enum Control {
   // Movement
   LEFT = "LEFT",

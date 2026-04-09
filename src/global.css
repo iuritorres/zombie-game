@@ -14,6 +14,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
+  cursor: none;
 }
 
 body {
@@ -34,6 +35,16 @@ canvas {
 
 img {
   display: none;
+}
+
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: block;
+  pointer-events: none;
+  will-change: transform;
+  z-index: 9999;
 }
 
 #overlay {
