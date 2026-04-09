@@ -174,9 +174,11 @@ export class ZombieGame {
   start() {
     InputHandler.registerCursorEvents();
 
-    CONTROL_TYPE === ControlType.KEYBOARD
-      ? InputHandler.registerKeyboardEvents()
-      : InputHandler.registerMouseEvents(this.camera);
+    InputHandler.registerKeyboardEvents();
+
+    if (CONTROL_TYPE === ControlType.MOUSE) {
+      InputHandler.registerMouseEvents(this.camera);
+    }
 
     window.requestAnimationFrame(this.frame.bind(this));
   }
