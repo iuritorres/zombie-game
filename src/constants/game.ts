@@ -1,6 +1,6 @@
 import { ControlType } from "../types/controls";
 
-export const ENABLE_DEBUG = true;
+export const ENABLE_DEBUG = false;
 
 export const ZOOM_LEVEL = 0.8;
 export const SCREEN_WIDTH = 384 / ZOOM_LEVEL;
