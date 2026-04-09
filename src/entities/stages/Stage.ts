@@ -46,7 +46,5 @@ export class Stage {
     for (const collisionBox of this.collisionMap) {
       Debug.drawBox(context, camera, { x: 0, y: 0 }, collisionBox, "#7777FF");
     }
-
-
   }
 }
